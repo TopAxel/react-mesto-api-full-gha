@@ -236,7 +236,7 @@ function App() {
       <div className="page">
         <div className="page__container">
           <Routes>
-            <Route path="/sign-in" element={
+            <Route path="/signin" element={
               <>
                 <Header title="Регистрация" route="/signup" />
                 <Login onLogin={onLogin} />
