@@ -72,8 +72,8 @@ class Api {
 const api = new Api({
     baseUrl: 'https://api.artempopov.nomoredomainsrocks.ru',
     headers: {
-        'Content-Type': 'application/json',
-    },
+        'Content-Type': 'application/json'
+    }
 });
 
 export default api;
