@@ -9,7 +9,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 51.250.5.121
+IP-адрес 51.250.2.24
 
 Frontend https://artempopov.nomoredomainsrocks.ru
 
