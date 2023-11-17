@@ -2,7 +2,7 @@ import React from 'react';
 import PopupWithForm from './PopupWithForm.js';
 
 // компонент добавление карточки 
-function CardPopup({ isOpen, onClose, onAddPlace, onOverlayClose }) {
+function CardPopup({ isOpen, onClose, onAddPlace, onOverlayClose, onSubmit }) {
     const [name, setName] = React.useState('');
     const [link, setLink] = React.useState('');
 
