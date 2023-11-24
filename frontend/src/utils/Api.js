@@ -78,7 +78,7 @@ class Api {
 }
 
 const api = new Api({
-    baseUrl: 'http://localhost:4000',
+    baseUrl: 'https://api.artempopov.nomoredomainsrocks.ru',
     headers: {
         'Content-Type': 'application/json'
     }
