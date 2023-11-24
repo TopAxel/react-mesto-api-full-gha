@@ -1,7 +1,7 @@
 const allowedCors = [
   'https://artempopov.nomoredomainsrocks.ru',
   'http://artempopov.nomoredomainsrocks.ru',
-  'http://localhost:3000',
+  'http://localhost:3001',
 ];
 const cors = (req, res, next) => {
   const { origin } = req.headers;
