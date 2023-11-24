@@ -1,9 +1,9 @@
 const { celebrate, Joi } = require('celebrate');
-const { VERIFICATION_URL } = require('../utils/constants');
+const { VERIFICATION_URL, VERIFICATION_EMAIL } = require('../utils/constants');
 
 const validationLogin = celebrate({
   body: Joi.object().keys({
-    email: Joi.string().required().email(),
+    email: Joi.string().required().email(VERIFICATION_EMAIL),
     password: Joi.string().required(),
   }),
 });
@@ -13,7 +13,7 @@ const validationCreateUser = celebrate({
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
     avatar: Joi.string().pattern(VERIFICATION_URL),
-    email: Joi.string().required().email(),
+    email: Joi.string().required().email(VERIFICATION_EMAIL),
     password: Joi.string().required().min(8),
   }),
 });

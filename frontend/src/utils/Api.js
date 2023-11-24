@@ -11,10 +11,18 @@ class Api {
         return Promise.reject(`Ошибка: ${res.status}`)
     }
 
-    _request(endpoint, method, body) {
+    _getHeaders() {
+        const jwt = localStorage.getItem('jwt');
+        return {
+          'Authorization': `Bearer ${jwt}`,
+          ...this._headers,
+        };
+      }
+
+      _request(endpoint, method, body) {
         return fetch(`${this._baseUrl}/${endpoint}`, {
             method: method,
-            headers: this._headers,
+            headers: this._getHeaders(),
             body: JSON.stringify(body)
         })
             .then(res => this._parseResponse(res));
@@ -26,10 +34,10 @@ class Api {
     }
 
     // Добавление новой карточки через попап
-    addCard(data) {
+    addCard(user) {
         return this._request('cards', 'POST', {
-            name: data.name,
-            link: data.link
+            name: user.name,
+            link: user.link
         });
     }
 
@@ -70,10 +78,11 @@ class Api {
 }
 
 const api = new Api({
-    baseUrl: 'https://api.artempopov.nomoredomainsrocks.ru',
+    baseUrl: 'http://localhost:4000',
     headers: {
         'Content-Type': 'application/json'
     }
 });
 
 export default api;
+

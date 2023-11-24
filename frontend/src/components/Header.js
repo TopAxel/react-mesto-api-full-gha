@@ -2,11 +2,10 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import logo from '../image/logo/Vector.svg'
 // компанент Header (шапка)
-function Header({ mail, route, onClick, title }) {
+function Header({ email, route, onClick, title }) {
 
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
-
 
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen);
@@ -30,6 +29,7 @@ function Header({ mail, route, onClick, title }) {
     }
   }, [windowWidth]);
 
+
   // проверяем, находимся ли мы на странице входа или регистрации
   const isAuthPage = route === '/signin' || route === '/signup';
 
@@ -41,7 +41,7 @@ function Header({ mail, route, onClick, title }) {
         <Link to={route} className="header__link-entrance" type="button" onClick={onClick}>{title}</Link>
       ) : (
         <nav className={`header__auth ${menuOpen ? 'header__auth-open' : ''}`}>
-          <p className="header__text">{mail}</p>
+          <p className="header__text">{email}</p>
           <Link to={route} className="header__link" type="button" onClick={onClick}>{title}</Link>
         </nav>
       )}

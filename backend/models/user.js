@@ -9,24 +9,16 @@ const userSchema = new mongoose.Schema({
     minlength: 2,
     maxlength: 30,
     default: 'Жак-Ив Кусто',
-    validate: {
-      validator: (value) => validator.isAlpha(value),
-      message: 'Некорректное имя',
-    },
   },
   about: {
     type: String,
     minlength: 2,
     maxlength: 30,
     default: 'Исследователь океана',
-    validate: {
-      validator: (value) => validator.isAlpha(value),
-      message: 'Некорректное описание',
-    },
   },
   avatar: {
     type: String,
-    default: 'https://s1.1zoom.ru/big7/888/Eyes_Owls_Bubo_502568.jpg',
+    default: 'https://laplaya-rus.ru/wp-content/uploads/2/8/5/285ac848bbbb168f9a318dc114eb4fe6.jpeg',
     validate: {
       validator: (value) => validator.isURL(value),
       message: 'Неверная ссылка на аватар',
@@ -34,18 +26,20 @@ const userSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    unique: true,
     required: true,
     validate: {
       validator: (value) => validator.isEmail(value),
       message: 'неверный адрес элетронной почты',
     },
+    unique: true,
   },
   password: {
     type: String,
     select: false,
     required: true,
   },
+}, {
+  versionKey: false,
 });
 
 userSchema.statics.findUserByCredentials = async function findUserByCredentials(email, password) {

@@ -7,16 +7,12 @@ const cardSchema = new mongoose.Schema({
     required: true,
     minlength: 2,
     maxlength: 30,
-    validate: {
-      validator: (value) => validator.isAlpha(value),
-      message: 'Некорректное имя карточки',
-    },
   },
   link: {
     type: String,
     required: true,
     validate: {
-      validator: (value) => validator.isUrl(value),
+      validator: (value) => validator.isURL(value),
       message: 'Неверная ссылка',
     },
   },

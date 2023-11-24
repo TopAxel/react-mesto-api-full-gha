@@ -28,11 +28,32 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [cards, setCards] = React.useState([]);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  const [emailName, setEmailName] = React.useState("");
+  const [email, setEmailName] = React.useState("");
   const [tooltipImage, setPopupImage] = React.useState("");
   const [tooltipTitle, setPopupTitle] = React.useState("");
   const [isTooltipOpen, setInfoTooltip] = React.useState(false);
 
+  React.useEffect(() => {
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
+      Auth.checkToken(jwt)
+        .then((user) => {
+          if (user) {
+            setIsLoggedIn(true);
+            setEmailName(user.email);
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }, []);
+
+  React.useEffect(() => {
+    if (isLoggedIn === true) {
+      navigate("/");
+    }
+  }, [isLoggedIn, navigate]);
 
   function onRegister(email, password) {
     Auth.registerUser(email, password)
@@ -62,28 +83,6 @@ function App() {
         handleInfoTooltip();
       });
   }
-
-  React.useEffect(() => {
-    const jwt = localStorage.getItem("jwt");
-    if (jwt) {
-      Auth.checkToken(jwt)
-        .then((res) => {
-          if (res) {
-            setIsLoggedIn(true);
-            setEmailName(res.data.email);
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
-  }, []);
-
-  React.useEffect(() => {
-    if (isLoggedIn === true) {
-      navigate("/");
-    }
-  }, [isLoggedIn, navigate]);
 
   // обработчики 
   const handleEditAvatarClick = () => {
@@ -161,8 +160,8 @@ function App() {
   React.useEffect(() => {
     if (isLoggedIn) {
       api.getInitialCards()
-        .then((data) => {
-          setCards(data);
+        .then((cards) => {
+          setCards(cards.reverse());
         })
         .catch(err => {
           console.log(err);
@@ -173,7 +172,7 @@ function App() {
 
   // установка и снятия лайка
   function handleCardLike(card) {
-    const isLiked = card.likes.some((like) => like._id === currentUser._id);
+    const isLiked = card.likes.some((like) => like === currentUser._id);
 
     if (isLiked) {
       api.deleteLike(card._id)
@@ -201,8 +200,8 @@ function App() {
   // добавление карточки 
   const handleAddPlace = (Card) => {
     api.addCard(Card)
-      .then((addedCard) => {
-        setCards([addedCard, ...cards]);
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
         closeAllPopups();
       })
       .catch((error) => {
@@ -224,7 +223,7 @@ function App() {
 
   function onSignOut() {
     setIsLoggedIn(false);
-    setEmailName("");
+    setEmailName('');
     navigate("/signin");
     localStorage.removeItem("jwt");
   }
@@ -252,7 +251,7 @@ function App() {
 
             <Route exact path="/" element={
               <>
-                <Header title="Выйти" mail={emailName} onClick={onSignOut} route="" />
+                <Header title="Выйти" email={email} onClick={onSignOut} route="" />
                 <ProtectedRoute
                   component={Main}
                   isLogged={isLoggedIn}
